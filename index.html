@@ -99,6 +99,7 @@
         let container = d3.select("#airlinesChart")
 
         container.attr("width", width)
+                 .attr("height", height)
 
         return { width, height, margin, bodyHeight, bodyWidth, container}
     }
@@ -136,11 +137,27 @@
            .attr("fill", "#2a5599")
     }
 
-    
+    function drawAxesAirlinesChart(airlines, scales, config){
+        let {xScale, yScale} = scales
+        let {container, margin, height} = config;
+        let axisX = d3.axisBottom(xScale)
+                        .ticks(5)
+
+        container.append("g")
+                 .style("transform", `translate(${margin.left}px,${height - margin.bottom}px)`)
+                 .call(axisX)
+
+        let axisY = d3.axisLeft(yScale)
+
+        container.append("g")
+                 .style("transform", `translate(${margin.left}px, ${margin.top}px)`)
+                 .call(axisY)
+        }
     function drawAirLinesChart(airlines){
         let config = getAirlinesChartConfig();
         let scales = getAirlinesChartScales(airlines, config);
-        drawBarsAirlinesChart(airlines, scales, config)
+        drawBarsAirlinesChart(airlines, scales, config) 
+        drawAxesAirlinesChart(airlines, scales, config);
     }
 
     loadData().then(showData);
