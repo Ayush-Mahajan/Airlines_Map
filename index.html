@@ -235,12 +235,31 @@
         return result
     }
 
+    function drawAirports(airports) {
+        let config = getMapConfig();
+        let projection = getMapProjection(config);
+        let container = config.container;
+
+        let circles = container.selectAll("circle")
+                               .data(airports)
+                               .enter()
+                               .append("circle")
+                               .attr("r", 1)
+                               .attr("fill", "32a5599")
+                               .attr("cx", d => projection([+d.Longitude, +d.Latitude])[0])
+                               .attr("cy", d => projection([+d.Longitude, +d.Latitude])[1])
+    }
+
     function showData() {
         let routes = store.routes;
         let airlines = groupByAirline(routes);
         console.log(airlines);
+        
         drawAirLinesChart(airlines);
         drawMap(store.geoJSON);
+        
+        let airports = groupByAirport(store.routes)
+        drawAirports(airports)
     }
 
     loadData().then(showData);
