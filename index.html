@@ -176,6 +176,16 @@
         return projection;
     }
 
+    function drawBaseMap(container, countries, projection){
+        let path = d3.geoPath()
+                     .projection(projection)
+
+        container.selectAll("path").data(countries)
+                 .enter().append("path")
+                 .attr("d", d => path(d))
+                 .attr("fill", "#eee")
+                 .attr("stroke", "#ccc")
+    }
 
     function showData() {
         let routes = store.routes;
