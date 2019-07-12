@@ -176,6 +176,7 @@
         return projection;
     }
 
+
     function drawBaseMap(container, countries, projection){
         let path = d3.geoPath()
                      .projection(projection)
@@ -185,6 +186,12 @@
                  .attr("d", d => path(d))
                  .attr("fill", "#eee")
                  .attr("stroke", "#ccc")
+    }
+
+    function drawMap(geoJSON){
+        let config = getMapConfig();
+        let projection = getMapProjection(config);
+        drawBaseMap(config.container, geoJSON.features, projection)
     }
 
     function showData() {
