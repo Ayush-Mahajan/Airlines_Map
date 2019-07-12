@@ -195,7 +195,11 @@
     }
 
     function groupByAirport(data){
+        // We use reduce for easy check of airports. It will converte
+        // list into object
+
         let result =    data.reduce((result, d) => {
+            // Checking for Destination Airport
             let currentDest = result[d.DestAirportID] || {
                 "AirportId": d.DestAirportID,
                 "Airport": d.DestAirport,
@@ -208,8 +212,27 @@
             currentDest.Count +=1;
             result[d.DestAirportID] = currentDest;
 
+            // checking for Source Airport
+            let currentSource = result[d.SourceAirportID] || {
+                "AirportID": d.SourceAirportID,
+                "Airpost": d.SourceAirport,
+                "Latitude": +d.SourceLatitude,
+                "Longitude": +d.SourceLongitude,
+                "City": d.SourceCity,
+                "Country": d.SourceCountry,
+                "Count": 0
+
+            }
+
+            currentSource.Count += 1
+            result[d.SourceAirportID] = currentSource
+
             return result
         }, {})
+
+        result = Object.keys(result).map(key =>result[key])
+
+        return result
     }
 
     function showData() {
