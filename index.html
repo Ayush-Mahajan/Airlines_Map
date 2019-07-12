@@ -195,9 +195,21 @@
     }
 
     function groupByAirport(data){
-        let result =    data.reduce((result d) => {
-            let currentDest =
-        })
+        let result =    data.reduce((result, d) => {
+            let currentDest = result[d.DestAirportID] || {
+                "AirportId": d.DestAirportID,
+                "Airport": d.DestAirport,
+                "Latitude": +d.DestLatitude,
+                "Longitude": +d.DestLongitude,
+                "City": d.DestCity,
+                "Country": d.DestCountry,
+                "Count": 0
+            }
+            currentDest.Count +=1;
+            result[d.DestAirportID] = currentDest;
+
+            return result
+        }, {})
     }
 
     function showData() {
