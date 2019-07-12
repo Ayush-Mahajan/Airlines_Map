@@ -194,6 +194,12 @@
         drawBaseMap(config.container, geoJSON.features, projection)
     }
 
+    function groupByAirport(data){
+        let result =    data.reduce((result d) => {
+            let currentDest =
+        })
+    }
+
     function showData() {
         let routes = store.routes;
         let airlines = groupByAirline(routes);
